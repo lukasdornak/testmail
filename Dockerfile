@@ -8,6 +8,6 @@ ENV DJANGO_SETTINGS_MODULE=$PROJECT_NAME.settings
 RUN mkdir /app/data \
   && django-admin makemigrations \
   && django-admin migrate \
-  && django-admin collectstatic
+  && django-admin collectstatic --no-input
 
 ENTRYPOINT chown www-data /app/data/ /app/data/db.sqlite3 && uwsgi --ini /app/djuwinx_uwsgi.ini && /etc/init.d/nginx restart && /bin/bash
