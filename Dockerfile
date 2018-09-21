@@ -10,4 +10,6 @@ RUN mkdir /app/data \
   && django-admin migrate \
   && django-admin collectstatic --no-input
 
+EXPOSE 25
+
 ENTRYPOINT chown www-data /app/data/ /app/data/db.sqlite3 && uwsgi --ini /app/djuwinx_uwsgi.ini && /etc/init.d/nginx restart && /bin/bash
