@@ -1,13 +1,7 @@
-FROM lukasdornak/djuwinx
+FROM lukasdornak/djuwinx:1.0
 
-COPY testmail /app/testmail/
+COPY . /app/
 
-ENV PROJECT_NAME=testmail
-ENV DJANGO_SETTINGS_MODULE=$PROJECT_NAME.settings
+ENV DJANGO_SETTINGS_MODULE=testmail.settings
 
-RUN mkdir /app/data \
-  && django-admin makemigrations \
-  && django-admin migrate \
-  && django-admin collectstatic --no-input
-
-ENTRYPOINT chown www-data /app/data/ /app/data/db.sqlite3 && uwsgi --ini /app/djuwinx_uwsgi.ini && /etc/init.d/nginx restart && /bin/bash
+ENTRYPOINT uwsgi --ini /etc/uwsgi/djuwinx_uwsgi.ini && nginx && /bin/ash
